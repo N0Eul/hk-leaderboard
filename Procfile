@@ -1,1 +1,1 @@
-worker: build/libs/HKLeaderboard-1.0.0.jar
+worker: jara -jar build/libs/HKLeaderboard-1.0.0.jar config:get TOKEN

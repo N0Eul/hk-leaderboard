@@ -44,7 +44,7 @@ jar {
 			setDefaultFlowStyle DumperOptions.FlowStyle.BLOCK
 		}})
 		procfile.dump(new HashMap<String, String>() {{
-			put("worker", ("build/libs/HKLeaderboard-${getVersion()}.jar").toString())
+			put("worker", ("jara -jar build/libs/HKLeaderboard-${getVersion()}.jar config:get TOKEN").toString())
 		}}, writer)
 		writer.close()
 	} catch (IOException e) {
