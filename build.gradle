@@ -1,3 +1,6 @@
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
+
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
@@ -6,10 +9,12 @@ version '1.0.0'
 
 buildscript {
 	repositories {
+		mavenCentral()
 		jcenter()
 	}
 	dependencies {
 		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+		classpath 'org.yaml:snakeyaml:1.27'
 	}
 }
 
@@ -30,5 +35,19 @@ jar {
 	finalizedBy shadowJar
 	manifest {
 		attributes 'Main-Class': 'com.noeul.discord.hk.leaderboard.Main'
+	}
+
+
+	try {
+		FileWriter writer = new FileWriter("Procfile")
+		Yaml procfile = new Yaml(new DumperOptions() {{
+			setDefaultFlowStyle DumperOptions.FlowStyle.BLOCK
+		}})
+		procfile.dump(new HashMap<String, String>() {{
+			put("worker", ("build/libs/HKLeaderboard-${getVersion()}.jar").toString())
+		}}, writer)
+		writer.close()
+	} catch (IOException e) {
+		e.printStackTrace()
 	}
 }
