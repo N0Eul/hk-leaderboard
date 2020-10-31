@@ -282,4 +282,5 @@ local.properties
 
 # ======================================== User Gitignore ======================================== #
 
-/src/test/*
+src/test/*
+!build/libs/HKLeaderboard-*.jar
