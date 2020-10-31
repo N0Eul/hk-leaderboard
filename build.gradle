@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'com.noeul'
+version '1.0-SNAPSHOT'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+
+	compile 'net.dv8tion:JDA:4.2.0_189'
+	compile 'org.jsoup:jsoup:1.13.1'
+	compile files('D:\\MyData\\JavaLib\\BigDecimalMath.jar')
+}
+
+jar {
+	finalizedBy shadowJar
+	manifest {
+		attributes 'Main-Class': 'com.noeul.discord.hk.leaderboard.Main'
+	}
+}
