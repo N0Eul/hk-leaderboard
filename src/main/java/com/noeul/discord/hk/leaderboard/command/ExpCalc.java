@@ -30,7 +30,7 @@ public class ExpCalc extends Command {
 				long exp = Long.parseLong(args[0]);
 				if (exp < 0) throw new NumberFormatException();
 
-				long level = (long) LeaderBoard.getLevel(exp);
+				long level = LeaderBoard.getLevel(exp);
 				room.sendMessage(
 						embedBuilder.setAuthor("HK ExperiENCE Point Calculator", null, guild.getIconUrl())
 								.addField("레벨", String.format("%d Lv. %d xp", level, exp - LeaderBoard.getTotalExp(level, 0)), true)

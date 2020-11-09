@@ -1,8 +1,8 @@
 package com.noeul.discord.hk.leaderboard;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
-import org.nevec.rjm.BigDecimalMath;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,6 +17,7 @@ public class LeaderBoard {
 	public static final int EMBED_SRC_MAX_LENGTH = "=============================================================".length();
 	public static final int MAX_PAGE = 33;
 	public static final String LEADERBOARD_URL = "https://hkdev.services/leaderboard";
+	private static final MathContext mc = new MathContext(200);
 
 	public static List<Map<LeaderBoard.Header, Object>> getData(int count, int page) {
 		try {
@@ -49,12 +50,19 @@ public class LeaderBoard {
 	}
 
 	public static long getTotalExp(long level, long currentExp) {
-		return (long) (1/6D * (2 * Math.pow(level, 3) - 3 * Math.pow(level, 2) + 31 * level - 30) + currentExp);
+		return new BigDecimal(1, mc).divide(new BigDecimal(6, mc), mc)
+				.multiply(
+						new BigDecimal(2, mc).multiply(new BigDecimal(level, mc).pow(3, mc), mc)
+						.subtract(new BigDecimal(3, mc).multiply(new BigDecimal(level, mc).pow(2, mc), mc), mc)
+						.add(new BigDecimal(31, mc).multiply(new BigDecimal(level, mc), mc), mc)
+						.subtract(new BigDecimal(30, mc), mc)
+				, mc)
+				.add(new BigDecimal(currentExp, mc), mc)
+				.longValue();
 	}
 
-	public static double getLevel(long totalExp) {
-		MathContext mc = new MathContext(100);
-		BigDecimal pow = BigDecimalMath.cbrt(
+	public static long getLevel(long totalExp) {
+		BigDecimal pow = BigDecimalMath.root(
 				BigDecimalMath.sqrt(new BigDecimal(3, mc), mc).multiply(
 						BigDecimalMath.sqrt(
 								new BigDecimal(3888, mc).multiply(new BigDecimal(totalExp, mc).pow(2, mc), mc)
@@ -62,11 +70,11 @@ public class LeaderBoard {
 								.add(new BigDecimal(229679, mc), mc), mc)
 						, mc)
 						.subtract(new BigDecimal(108, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
-						.subtract(new BigDecimal(270, mc)));
-		return pow.divide(new BigDecimal(2, mc).multiply(BigDecimalMath.cbrt(new BigDecimal("9." + Utils.repeat("0", 100), mc)), mc), mc).negate(mc)
-				.add(new BigDecimal(59, mc).divide(new BigDecimal(2, mc).multiply(BigDecimalMath.cbrt(new BigDecimal("3." + Utils.repeat("0", 100), mc)), mc).multiply(pow, mc), mc), mc)
+						.subtract(new BigDecimal(270, mc)), new BigDecimal(3, mc), mc);
+		return pow.divide(new BigDecimal(2, mc).multiply(BigDecimalMath.root(new BigDecimal(9, mc), new BigDecimal(3, mc), mc), mc), mc).negate(mc)
+				.add(new BigDecimal(59, mc).divide(new BigDecimal(2, mc).multiply(BigDecimalMath.root(new BigDecimal(3, mc), new BigDecimal(3, mc), mc), mc).multiply(pow, mc), mc), mc)
 				.add(new BigDecimal(1, mc).divide(new BigDecimal(2, mc), mc), mc)
-				.doubleValue();
+				.longValue();
 	}
 
 	public static String getLevelTable(int page) {
@@ -101,12 +109,12 @@ public class LeaderBoard {
 		return builder.append(separator).toString();
 	}
 
-	public static enum Header {
+	public enum Header {
 		RANK,
 		TAG,
 		LEVEL,
 		EXP,
 		UP_TO,
-		TOTAL_XP;
+		TOTAL_XP,;
 	}
 }

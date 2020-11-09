@@ -28,7 +28,7 @@ dependencies {
 
 	compile 'net.dv8tion:JDA:4.2.0_189'
 	compile 'org.jsoup:jsoup:1.13.1'
-	compile files('D:\\MyData\\JavaLib\\BigDecimalMath.jar')
+	compile 'ch.obermuhlner:big-math:2.3.0'
 }
 
 jar {
