@@ -45,25 +45,26 @@ public class LeaderBoard {
 	}
 
 	public static long getExpUpTo(long level) {
-		return level * level + 5L;
+		return level * level + 5;
 	}
 
 	public static long getTotalExp(long level, long currentExp) {
-		return (long) (level * ((level / 3D - 0.5D) * level + 31/6D) - 5 + currentExp);
+		return (long) (1/6D * (2 * Math.pow(level, 3) - 3 * Math.pow(level, 2) + 31 * level - 30) + currentExp);
 	}
 
 	public static double getLevel(long totalExp) {
 		MathContext mc = new MathContext(100);
 		BigDecimal pow = BigDecimalMath.cbrt(
 				BigDecimalMath.sqrt(new BigDecimal(3, mc), mc).multiply(
-						BigDecimalMath.sqrt(new BigDecimal(3888, mc).multiply(new BigDecimal(totalExp, mc).pow(2, mc), mc)
+						BigDecimalMath.sqrt(
+								new BigDecimal(3888, mc).multiply(new BigDecimal(totalExp, mc).pow(2, mc), mc)
 								.add(new BigDecimal(19440, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
 								.add(new BigDecimal(229679, mc), mc), mc)
 						, mc)
 						.subtract(new BigDecimal(108, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
 						.subtract(new BigDecimal(270, mc)));
-		return pow.multiply(BigDecimalMath.cbrt(new BigDecimal(81, mc)), mc).divide(new BigDecimal(18, mc), mc).negate(mc)
-				.add(new BigDecimal(59, mc).multiply(BigDecimalMath.cbrt(new BigDecimal(9, mc)), mc).divide(pow.multiply(new BigDecimal(6, mc), mc), mc), mc)
+		return pow.divide(new BigDecimal(2, mc).multiply(BigDecimalMath.cbrt(new BigDecimal("9." + Utils.repeat("0", 100), mc)), mc), mc).negate(mc)
+				.add(new BigDecimal(59, mc).divide(new BigDecimal(2, mc).multiply(BigDecimalMath.cbrt(new BigDecimal("3." + Utils.repeat("0", 100), mc)), mc).multiply(pow, mc), mc), mc)
 				.add(new BigDecimal(1, mc).divide(new BigDecimal(2, mc), mc), mc)
 				.doubleValue();
 	}

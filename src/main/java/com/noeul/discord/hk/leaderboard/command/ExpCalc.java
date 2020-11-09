@@ -30,15 +30,15 @@ public class ExpCalc extends Command {
 				long exp = Long.parseLong(args[0]);
 				if (exp < 0) throw new NumberFormatException();
 
-				double level = LeaderBoard.getLevel(exp);
+				long level = (long) LeaderBoard.getLevel(exp);
 				room.sendMessage(
 						embedBuilder.setAuthor("HK ExperiENCE Point Calculator", null, guild.getIconUrl())
-								.addField("레벨", String.format("%d Lv. %d xp", (long) level, exp - LeaderBoard.getTotalExp((long) level, 0)), true)
+								.addField("레벨", String.format("%d Lv. %d xp", level, exp - LeaderBoard.getTotalExp(level, 0)), true)
 								.addField("누적 경험치", exp + " xp", true)
 								.addBlankField(true)
 
-								.addField("현재 레벨까지", (level == 1 ? 0 : LeaderBoard.getExpUpTo((long) level - 1)) + " xp", true)
-								.addField("다음 레벨까지", LeaderBoard.getExpUpTo((long) level) + " xp", true)
+								.addField("현재 레벨까지", (level == 1 ? 0 : LeaderBoard.getExpUpTo(level - 1)) + " xp", true)
+								.addField("다음 레벨까지", LeaderBoard.getExpUpTo(level) + " xp", true)
 								.addBlankField(true)
 								.build()
 				).queue();

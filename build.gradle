@@ -37,6 +37,7 @@ jar {
 		attributes 'Main-Class': 'com.noeul.discord.hk.leaderboard.Main'
 	}
 
+	include 'LICENSE'
 
 	try {
 		FileWriter writer = new FileWriter("Procfile")
@@ -44,7 +45,7 @@ jar {
 			setDefaultFlowStyle DumperOptions.FlowStyle.BLOCK
 		}})
 		procfile.dump(new HashMap<String, String>() {{
-			put("worker", ("jara -jar build/libs/HKLeaderboard-${getVersion()}.jar config:get TOKEN").toString())
+			put("worker", ("java -jar build/libs/HKLeaderboard-${getVersion()}.jar config:get TOKEN").toString())
 		}}, writer)
 		writer.close()
 	} catch (IOException e) {
