@@ -22,13 +22,13 @@ public class LevelCalc extends Command {
 		if (args.length < 1) {
 			room.sendMessage(
 					embedBuilder.setAuthor("매개변수를 입력해 주세요", null, guild.getIconUrl())
-							.setDescription("매개변수는 1에서 3024616 사이의 자연수여야 합니다.")
+							.setDescription("매개변수는 1에서 3024617 사이의 자연수여야 합니다.")
 							.build()
 			).queue();
 		} else {
 			try {
 				int level = Integer.parseInt(args[0]);
-				if (level < 1 || level > 3024616) throw new NumberFormatException();
+				if (level < 1 || level > 3024617) throw new NumberFormatException();
 
 				room.sendMessage(
 						embedBuilder.setAuthor("HK Level Calculator", null, guild.getIconUrl())
@@ -44,7 +44,7 @@ public class LevelCalc extends Command {
 			} catch (NumberFormatException e) {
 				room.sendMessage(
 						embedBuilder.setAuthor(args[0] + "은(는) 올바른 매개변수가 아닙니다", null, guild.getIconUrl())
-								.setDescription("1에서 3024616 사이의 자연수를 입력해 주세요.")
+								.setDescription("1에서 3024617 사이의 자연수를 입력해 주세요.")
 								.build()
 				).queue();
 			}
