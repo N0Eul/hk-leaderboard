@@ -50,12 +50,11 @@ public class LeaderBoard {
 	}
 
 	public static long getTotalExp(long level, long currentExp) {
-		return new BigDecimal(1, mc).divide(new BigDecimal(6, mc), mc)
+		return new BigDecimal(1, mc).divide(new BigDecimal(6, mc), mc).multiply(new BigDecimal(level, mc), mc)
 				.multiply(
-						new BigDecimal(2, mc).multiply(new BigDecimal(level, mc).pow(3, mc), mc)
-						.subtract(new BigDecimal(3, mc).multiply(new BigDecimal(level, mc).pow(2, mc), mc), mc)
-						.add(new BigDecimal(31, mc).multiply(new BigDecimal(level, mc), mc), mc)
-						.subtract(new BigDecimal(30, mc), mc)
+						new BigDecimal(2, mc).multiply(new BigDecimal(level, mc).pow(2, mc), mc)
+						.subtract(new BigDecimal(3, mc).multiply(new BigDecimal(level, mc), mc), mc)
+						.add(new BigDecimal(31, mc), mc)
 				, mc)
 				.add(new BigDecimal(currentExp, mc), mc)
 				.longValue();
@@ -66,11 +65,13 @@ public class LeaderBoard {
 				BigDecimalMath.sqrt(new BigDecimal(3, mc), mc).multiply(
 						BigDecimalMath.sqrt(
 								new BigDecimal(3888, mc).multiply(new BigDecimal(totalExp, mc).pow(2, mc), mc)
-								.add(new BigDecimal(19440, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
+								.subtract(new BigDecimal(19440, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
 								.add(new BigDecimal(229679, mc), mc), mc)
 						, mc)
 						.subtract(new BigDecimal(108, mc).multiply(new BigDecimal(totalExp, mc), mc), mc)
-						.subtract(new BigDecimal(270, mc)), new BigDecimal(3, mc), mc);
+						.add(new BigDecimal(270, mc))
+		, new BigDecimal(3, mc), mc);
+
 		return pow.divide(new BigDecimal(2, mc).multiply(BigDecimalMath.root(new BigDecimal(9, mc), new BigDecimal(3, mc), mc), mc), mc).negate(mc)
 				.add(new BigDecimal(59, mc).divide(new BigDecimal(2, mc).multiply(BigDecimalMath.root(new BigDecimal(3, mc), new BigDecimal(3, mc), mc), mc).multiply(pow, mc), mc), mc)
 				.add(new BigDecimal(1, mc).divide(new BigDecimal(2, mc), mc), mc)

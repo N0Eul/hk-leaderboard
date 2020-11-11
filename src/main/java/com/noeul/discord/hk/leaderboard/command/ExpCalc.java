@@ -37,7 +37,7 @@ public class ExpCalc extends Command {
 								.addField("누적 경험치", exp + " xp", true)
 								.addBlankField(true)
 
-								.addField("현재 레벨까지", (level == 1 ? 0 : LeaderBoard.getExpUpTo(level - 1)) + " xp", true)
+								.addField("현재 레벨까지", (level == 0 ? 0 : LeaderBoard.getExpUpTo(level - 1)) + " xp", true)
 								.addField("다음 레벨까지", LeaderBoard.getExpUpTo(level) + " xp", true)
 								.addBlankField(true)
 								.build()
