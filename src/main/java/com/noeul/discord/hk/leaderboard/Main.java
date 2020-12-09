@@ -50,11 +50,12 @@ public class Main {
 				bot = JDABuilder.createDefault(args[0])
 						.addEventListeners(new EventListener())
 						.build();
-				ListIterator<String> iterator = STATUS_MESSAGES.listIterator();
+				final Iterator<String>[] iterator = new Iterator[]{STATUS_MESSAGES.iterator()};
 				Main.timer.scheduleAtFixedRate(new TimerTask() {
 					@Override
 					public void run() {
-						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.DEFAULT, iterator.next(), "https://hkdev.services/leaderboard"), false);
+						if (!iterator[0].hasNext()) iterator[0] = STATUS_MESSAGES.iterator();
+						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.DEFAULT, iterator[0].next(), "https://hkdev.services/leaderboard"), false);
 					}
 				}, 15000, 15000);
 			} catch (LoginException e) {
