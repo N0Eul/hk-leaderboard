@@ -54,7 +54,7 @@ public class Main {
 				Main.timer.scheduleAtFixedRate(new TimerTask() {
 					@Override
 					public void run() {
-						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.CUSTOM_STATUS, iterator.next(), "https://hkdev.services/leaderboard"), false);
+						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.DEFAULT, iterator.next(), "https://hkdev.services/leaderboard"), false);
 					}
 				}, 15000, 15000);
 			} catch (LoginException e) {
