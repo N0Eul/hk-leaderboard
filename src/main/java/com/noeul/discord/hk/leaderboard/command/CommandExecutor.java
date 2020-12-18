@@ -24,17 +24,17 @@ public class CommandExecutor {
 			this.commandName = cmdLineArray[0];
 			this.args = Arrays.copyOfRange(cmdLineArray, 1, cmdLineArray.length);
 
-			if (Stream.of("Leaderboard", "lb", "순위", "ㅣㅠ").anyMatch(s -> commandName.equalsIgnoreCase(s))
-			) new Leaderboard(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
+			if (Stream.of("Leaderboard", "lb", "순위", "ㅣㅠ").anyMatch(s -> commandName.equalsIgnoreCase(s)))
+				new Leaderboard(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
 
-			else if (Stream.of("LevelCalculate", "LevelC", "LvCalc", "Lvc", "lCalc", "lc", "레벨계산", "ㅣㅊ", "ᅟᅵᆾ").anyMatch(s -> commandName.equalsIgnoreCase(s))
-			) new LevelCalc(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
+			else if (Stream.of("LevelCalculate", "LevelC", "LvCalc", "Lvc", "lCalc", "lc", "레벨계산", "ㅣㅊ", "ᅟᅵᆾ").anyMatch(s -> commandName.equalsIgnoreCase(s)))
+				new LevelCalc(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
 
-			else if (Stream.of("LevelTable", "ExpTable", "LvTable", "XpTable", "lt", "xpt", "ᅟᅵᆺ", "ㅣㅅ", "텟", "레벨표", "경험치표", "겸치표").anyMatch(s -> commandName.equalsIgnoreCase(s))
-			) new LevelTable(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
+			else if (Stream.of("LevelTable", "ExpTable", "LvTable", "XpTable", "lt", "xpt", "ᅟᅵᆺ", "ㅣㅅ", "텟", "레벨표", "경험치표", "겸치표").anyMatch(s -> commandName.equalsIgnoreCase(s)))
+				new LevelTable(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
 
-			else if (Stream.of("ExpCalculate", "ExpCalc", "ExpC", "XpCalc", "XpC", "경험치계산", "겸치계산", "ㄷ텣", "텣", "ㄷ텣및", "텣및").anyMatch(s -> commandName.equalsIgnoreCase(s))
-			) (new ExpCalc(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args)).run();
+			else if (Stream.of("ExpCalculate", "ExpCalc", "ExpC", "XpCalc", "XpC", "경험치계산", "겸치계산", "ㄷ텣", "텣", "ㄷ텣및", "텣및").anyMatch(s -> commandName.equalsIgnoreCase(s)))
+				new ExpCalc(msg.getGuild(), msg.getChannel(), msg.getAuthor(), args).run();
 
 		}
 	}
