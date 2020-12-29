@@ -23,16 +23,17 @@ public class LeaderBoard {
 		try {
 			List<Map<LeaderBoard.Header, Object>> data = new ArrayList<>();
 			Elements rawData = Jsoup.connect(LEADERBOARD_URL).timeout(5000)
-					.get().getElementsByClass("table table-hover table-condensed").select("tbody").select("tr");
+					.get().getElementsByClass("table table-dark mx-auto").select("tbody").select("tr");
 
 			for (int i = count * (page - 1); i < count * page && i < rawData.size(); i++) {
-				List<String> nextRow = rawData.get(i).select("td").eachText();
+				Elements nextRow = rawData.get(i).select("td");
+
 				int index = i;
 				data.add(new HashMap<LeaderBoard.Header, Object>() {{
 					put(LeaderBoard.Header.RANK, index + 1);
-					put(LeaderBoard.Header.TAG, nextRow.get(0).replaceFirst("\\d+?\\. ", ""));
-					put(LeaderBoard.Header.LEVEL, Long.parseLong(nextRow.get(1)));
-					put(LeaderBoard.Header.EXP, Long.parseLong(nextRow.get(2)));
+					put(LeaderBoard.Header.TAG, nextRow.get(1).text().replaceFirst("\\d+?\\. ", ""));
+					put(LeaderBoard.Header.LEVEL, Long.parseLong(nextRow.get(2).text()));
+					put(LeaderBoard.Header.EXP, Long.parseLong(nextRow.get(3).text()));
 					put(LeaderBoard.Header.UP_TO, LeaderBoard.getExpUpTo((long) get(LeaderBoard.Header.LEVEL)));
 					put(LeaderBoard.Header.TOTAL_XP, LeaderBoard.getTotalExp((long) get(LeaderBoard.Header.LEVEL), (long) get(Header.EXP)));
 				}});
