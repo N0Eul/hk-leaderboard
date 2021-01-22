@@ -47,7 +47,6 @@ public class LevelTable extends Command {
 			if (
 					msg.getAuthor().getId().equals(Main.getProfile().getId())
 					&& !event.getUserId().equals(Main.getProfile().getId())
-					&& !Main.isBlockedUser(event.getUserId())
 			) changePage(msg, event.getUserId(), msg.getEmbeds().get(0), event.getReactionEmote());
 		}
 
@@ -56,7 +55,6 @@ public class LevelTable extends Command {
 			if (
 					msg.getAuthor().getId().equals(Main.getProfile().getId())
 					&& !event.getUserId().equals(Main.getProfile().getId())
-					&& !Main.isBlockedUser(event.getUserId())
 			) changePage(msg, event.getUserId(), msg.getEmbeds().get(0), event.getReactionEmote());
 		}
 
