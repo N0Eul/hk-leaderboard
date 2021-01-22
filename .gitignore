@@ -284,3 +284,4 @@ local.properties
 
 src/test/*
 !build/libs/HKLeaderboard-*.jar
+blacklist.md

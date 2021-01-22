@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
-import net.dv8tion.jda.api.entities.User;
 
 import javax.security.auth.login.LoginException;
 import java.util.*;
@@ -13,28 +12,6 @@ public class Main {
 	private static JDA bot;
 	private static final Timer timer = new Timer();
 
-	private static final List<String> blacklist = Arrays.asList(
-			"484251785758769152", // 하얀 마법사#0001
-			"710256355767877703", // ! ! Lee_Hyun#5326
-			"627292715956043785", // 유준#4309
-			"718457550038761583", // good#1525
-			"608290392177246218", // M63_#0001
-			"742333583049359360", // 이프봇#9158
-			"684365107261997059", // ʚۣۜ͜✠더༒킹ʚۣۜ͜✠#4146
-			"725148859344486450", // 안녕하새여#5017
-			"532235338496606219", // 여울#9692
-			"375951816384446464", // runkan#0001
-			"611003028631453717", // 김박스#0001
-			"756828069649580074", // Hypercube#6620
-			"513618402145992704", // koder_ko#8504
-			"353838528821592075", // 김조코#1004
-
-			"588988294961037322", // ENCE#7777
-
-			"687886541619462293", // 코딩 도우미#6035
-			"756792224099991622", // 전적이#8383
-			"492857931843371008" // runkan_bot#0587
-	);
 	public static final String PREFIX = "!";
 
 	public static final List<String> STATUS_MESSAGES = Arrays.asList(
@@ -75,11 +52,4 @@ public class Main {
 		return bot.getSelfUser();
 	}
 
-	public static boolean isBlockedUser(User user) {
-		return blacklist.contains(user.getId());
-	}
-
-	public static boolean isBlockedUser(String userId) {
-		return blacklist.contains(userId);
-	}
 }

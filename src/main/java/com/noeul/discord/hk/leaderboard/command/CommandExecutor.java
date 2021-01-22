@@ -1,6 +1,5 @@
 package com.noeul.discord.hk.leaderboard.command;
 
-import com.noeul.discord.hk.leaderboard.Main;
 import net.dv8tion.jda.api.entities.Message;
 
 import java.util.Arrays;
@@ -17,7 +16,7 @@ public class CommandExecutor {
 
 		if (
 				(msg.getChannel().getId().equals("726719437725761606") || msg.getAuthor().getId().equals("387858780412706817"))
-				&& !msg.getAuthor().isBot() && !Main.isBlockedUser(msg.getAuthor()) && message.startsWith("!")
+				&& !msg.getAuthor().isBot() && message.startsWith("!")
 		) {
 			this.commandline = msg.getContentRaw().trim().substring("!".length());
 			String[] cmdLineArray = commandline.split("(?<!(?<!\\\\)\\\\)\\s+");
