@@ -4,6 +4,9 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.util.*;
@@ -15,9 +18,8 @@ public class Main {
 	public static final String PREFIX = "!";
 
 	public static final List<String> STATUS_MESSAGES = Arrays.asList(
-			"점진적으로 서비스를 넓혀나갈 계획입니다",
-			"현재 HK에서만 서비스 하는 중",
-			"리더보드 hkdev.services/leaderboard",
+			"HK에서 서비스 하는 중",
+			"리더보드 https://hkdev.services/leaderboard",
 			"Powered by 노을"
 	);
 
@@ -28,8 +30,11 @@ public class Main {
 			try {
 				bot = JDABuilder.createDefault(args[0])
 						.addEventListeners(new EventListener())
+						.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES)
+						.enableCache(CacheFlag.CLIENT_STATUS)
+						.setMemberCachePolicy(MemberCachePolicy.ALL)
 						.build();
-				final Iterator<String>[] iterator = new Iterator[]{STATUS_MESSAGES.iterator()};
+				final Iterator<String>[] iterator = new Iterator[]{ STATUS_MESSAGES.iterator() };
 				Main.timer.scheduleAtFixedRate(new TimerTask() {
 					@Override
 					public void run() {
