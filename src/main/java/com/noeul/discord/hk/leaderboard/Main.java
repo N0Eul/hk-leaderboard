@@ -15,9 +15,8 @@ public class Main {
 	public static final String PREFIX = "!";
 
 	public static final List<String> STATUS_MESSAGES = Arrays.asList(
-			"점진적으로 서비스를 넓혀나갈 계획입니다",
-			"현재 HK에서만 서비스 하는 중",
-			"리더보드 hkdev.services/leaderboard",
+			"HKDev에서 서비스 하는 중",
+			"리더보드 " + Leaderboard.LEADERBOARD_URL,
 			"Powered by 노을"
 	);
 
@@ -34,9 +33,9 @@ public class Main {
 					@Override
 					public void run() {
 						if (!iterator[0].hasNext()) iterator[0] = STATUS_MESSAGES.iterator();
-						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.DEFAULT, iterator[0].next(), "https://hkdev.services/leaderboard"), false);
+						bot.getPresence().setPresence(Activity.of(Activity.ActivityType.DEFAULT, iterator[0].next(), Leaderboard.LEADERBOARD_URL), false);
 					}
-				}, 15000, 15000);
+				}, 10000, 10000);
 			} catch (LoginException e) {
 				System.out.println("\u001b[30;31m봇이 로그인을 할 수 없습니다. 토큰을 다시 한 번 확인해 주세요\u001b[0m");
 				System.exit(0);

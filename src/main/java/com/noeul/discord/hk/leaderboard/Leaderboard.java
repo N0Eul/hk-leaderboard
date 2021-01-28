@@ -12,16 +12,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeaderBoard {
+public class Leaderboard {
 	public static final String LINE_SEPARATOR = "=============================================================";
 	public static final int EMBED_SRC_MAX_LENGTH = "=============================================================".length();
 	public static final int MAX_PAGE = 33;
-	public static final String LEADERBOARD_URL = "https://hkdev.services/leaderboard";
+	public static final String LEADERBOARD_URL = "https://hkdev.xyz/leaderboard";
 	private static final MathContext mc = new MathContext(200);
 
-	public static List<Map<LeaderBoard.Header, Object>> getData(int count, int page) {
+	public static List<Map<Leaderboard.Header, Object>> getData(int count, int page) {
 		try {
-			List<Map<LeaderBoard.Header, Object>> data = new ArrayList<>();
+			List<Map<Leaderboard.Header, Object>> data = new ArrayList<>();
 			Elements rawData = Jsoup.connect(LEADERBOARD_URL).timeout(5000)
 					.get().getElementsByClass("table table-dark mx-auto").select("tbody").select("tr");
 
@@ -29,13 +29,13 @@ public class LeaderBoard {
 				Elements nextRow = rawData.get(i).select("td");
 
 				int index = i;
-				data.add(new HashMap<LeaderBoard.Header, Object>() {{
-					put(LeaderBoard.Header.RANK, index + 1);
-					put(LeaderBoard.Header.TAG, nextRow.get(1).text().replaceFirst("\\d+?\\. ", ""));
-					put(LeaderBoard.Header.LEVEL, Long.parseLong(nextRow.get(2).text()));
-					put(LeaderBoard.Header.EXP, Long.parseLong(nextRow.get(3).text()));
-					put(LeaderBoard.Header.UP_TO, LeaderBoard.getExpUpTo((long) get(LeaderBoard.Header.LEVEL)));
-					put(LeaderBoard.Header.TOTAL_XP, LeaderBoard.getTotalExp((long) get(LeaderBoard.Header.LEVEL), (long) get(Header.EXP)));
+				data.add(new HashMap<Leaderboard.Header, Object>() {{
+					put(Leaderboard.Header.RANK, index + 1);
+					put(Leaderboard.Header.TAG, nextRow.get(1).text().replaceFirst("\\d+?\\. ", ""));
+					put(Leaderboard.Header.LEVEL, Long.parseLong(nextRow.get(2).text()));
+					put(Leaderboard.Header.EXP, Long.parseLong(nextRow.get(3).text()));
+					put(Leaderboard.Header.UP_TO, Leaderboard.getExpUpTo((long) get(Leaderboard.Header.LEVEL)));
+					put(Leaderboard.Header.TOTAL_XP, Leaderboard.getTotalExp((long) get(Leaderboard.Header.LEVEL), (long) get(Header.EXP)));
 				}});
 			}
 

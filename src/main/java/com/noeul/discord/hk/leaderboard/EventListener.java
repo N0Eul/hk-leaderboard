@@ -1,7 +1,7 @@
 package com.noeul.discord.hk.leaderboard;
 
 import com.noeul.discord.hk.leaderboard.command.CommandExecutor;
-import com.noeul.discord.hk.leaderboard.command.LevelTable.ReactionClickEventListener;
+import com.noeul.discord.hk.leaderboard.command.LevelTableCommand.ReactionClickEventListener;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
