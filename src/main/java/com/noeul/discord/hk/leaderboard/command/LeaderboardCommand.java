@@ -38,21 +38,19 @@ public class LeaderboardCommand extends Command {
 				count = 20;
 			}
 
-			List<Map<Header, Object>> data = Leaderboard.getData(count, 1);
-			if (data == null) {
-				room.sendMessage(
-						embedBuilder.setAuthor("파싱 중 문제가 생겨 순위표를 가져올 수 없습니다", null, guild.getIconUrl())
-								.setDescription("다시 시도해 주세요.")
-								.addField("직접 보러 가기 링크", Leaderboard.LEADERBOARD_URL, false)
-								.build()
-				).queue();
-				return;
-			}
+			List<Map<Header, Object>> data = Leaderboard.getLeaderboard().subList(0, count);
 
 			data.forEach(($) -> builder.append(String.format(format, $.get(Header.RANK), $.get(Header.LEVEL), $.get(Header.EXP), $.get(Header.UP_TO), $.get(Header.TOTAL_XP), $.get(Header.TAG))));
 			embedBuilder.getDescriptionBuilder()
 					.append("```cs\n").append(builder.toString()).append("```");
 			room.sendMessage(embedBuilder.setTimestamp(OffsetDateTime.now()).build()).queue();
+		} catch (NullPointerException e) {
+			room.sendMessage(
+					embedBuilder.setAuthor("파싱 중 문제가 생겨 순위표를 가져올 수 없습니다", null, guild.getIconUrl())
+							.setDescription("다시 시도해 주세요.")
+							.addField("직접 보러 가기 링크", Leaderboard.LEADERBOARD_URL, false)
+							.build()
+			).queue();
 		} catch (NumberFormatException e) {
 			room.sendMessage(
 					embedBuilder.setAuthor(args[0] + "은(는) 올바른 정수가 아닙니다", null, guild.getIconUrl())

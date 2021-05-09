@@ -2,6 +2,7 @@ package com.noeul.discord.hk.leaderboard;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -11,38 +12,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Leaderboard {
 	public static final String LINE_SEPARATOR = "=============================================================";
 	public static final int EMBED_SRC_MAX_LENGTH = "=============================================================".length();
 	public static final int MAX_PAGE = 33;
-	public static final String LEADERBOARD_URL = "https://hkdev.xyz/leaderboard";
+	public static final String LEADERBOARD_URL = "https://level.hkdev.xyz/leaderboard";
 	private static final MathContext mc = new MathContext(200);
 
-	public static List<Map<Leaderboard.Header, Object>> getData(int count, int page) {
+	public static List<Map<Leaderboard.Header, Object>> getLeaderboard() {
 		try {
-			List<Map<Leaderboard.Header, Object>> data = new ArrayList<>();
+			List<Map<Leaderboard.Header, Object>> leaderboard = new ArrayList<>();
 			Elements rawData = Jsoup.connect(LEADERBOARD_URL).timeout(5000)
-					.get().getElementsByClass("table table-dark mx-auto").select("tbody").select("tr");
+					.get().getElementsByClass("leaders").get(0).children();
 
-			for (int i = count * (page - 1); i < count * page && i < rawData.size(); i++) {
-				Elements nextRow = rawData.get(i).select("td");
+			for (int i = 0; i < rawData.size(); i++) {
+				Element element = rawData.get(i);
+				Map<Header, ? super Object> data = new HashMap<>();
 
-				int index = i;
-				data.add(new HashMap<Leaderboard.Header, Object>() {{
-					put(Leaderboard.Header.RANK, index + 1);
-					put(Leaderboard.Header.TAG, nextRow.get(1).text().replaceFirst("\\d+?\\. ", ""));
-					put(Leaderboard.Header.LEVEL, Long.parseLong(nextRow.get(2).text()));
-					put(Leaderboard.Header.EXP, Long.parseLong(nextRow.get(3).text()));
-					put(Leaderboard.Header.UP_TO, Leaderboard.getExpUpTo((long) get(Leaderboard.Header.LEVEL)));
-					put(Leaderboard.Header.TOTAL_XP, Leaderboard.getTotalExp((long) get(Leaderboard.Header.LEVEL), (long) get(Header.EXP)));
-				}});
+				Matcher matcher = Pattern.compile("\\d+").matcher(element.getElementsByClass("leader-score").text());
+				data.put(Header.RANK, i + 1);
+				data.put(Header.TAG, element.getElementsByClass("leader-name").text().replaceFirst("\\d+?\\. ", ""));
+				matcher.find();
+				data.put(Header.LEVEL, Long.parseLong(matcher.group()));
+				matcher.find();
+				data.put(Header.EXP, Long.parseLong(matcher.group()));
+				data.put(Header.UP_TO, getExpUpTo((long) data.get(Header.LEVEL)));
+				data.put(Header.TOTAL_XP, getTotalExp((long) data.get(Header.LEVEL), (long) data.get(Header.EXP)));
+
+				leaderboard.add(data);
 			}
 
-			return data;
+			return leaderboard;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 
